@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kendaraan;
 use App\Services\KendaraanService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class KendaraanController extends Controller
 {
@@ -17,11 +18,18 @@ class KendaraanController extends Controller
   
   public function checkStock(Request $request)
   {
-    // Validate the request data
-    $this->validate($request, [
+    $validator = Validator::make($request->all(), [
       'warna' => 'required',
     ]);
+  
+    if ($validator->fails()) {
+      return response()->json([
+        'status' => 'failed',
+        'message' => $validator->errors(),
+      ], 422);
+    }
     
+    try{
     // Get the Kendaraan object by warna
     $kendaraan = Kendaraan::where('warna', $request->input('warna'))->first();
     
@@ -34,5 +42,11 @@ class KendaraanController extends Controller
     $stockInfo = $this->kendaraanService->checkStock($kendaraan);
     
     return response()->json($stockInfo);
+    } catch (\Exception $exception) {
+      return response()->json([
+        'status' => 'failed',
+        'message' => $exception->getMessage(),
+      ], $exception->getCode());
+    }
   }
 }
