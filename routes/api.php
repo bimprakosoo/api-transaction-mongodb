@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\KendaraanTransactionController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +15,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('jwt')->group(function () {
+  Route::post('/kendaraan/check-stock', [KendaraanController::class, 'checkStock']);;
+  
+  Route::post('/kendaraan-transactions', [KendaraanTransactionController::class, 'store']);
+  
+  Route::get('/sales-report', [KendaraanTransactionController::class, 'getSalesReport']);
 });
 
-Route::post('/kendaraan/check-stock', [KendaraanController::class, 'checkStock']);;
-
-Route::post('/kendaraan-transactions', [KendaraanTransactionController::class, 'store']);
-
-Route::get('/sales-report', [KendaraanTransactionController::class, 'getSalesReport']);
 

@@ -17,7 +17,6 @@ class KendaraanRepository
       return ['in_stock' => false, 'total_stock' => 0];
     }
     
-    // If there are documents found, return true and the total stock count
     return ['in_stock' => true, 'total_stock' => $totalStock];
     } catch (\Exception $exception) {
       return ['in_stock' => false, 'total_stock' => 0];
