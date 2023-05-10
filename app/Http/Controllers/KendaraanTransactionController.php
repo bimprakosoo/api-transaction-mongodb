@@ -56,6 +56,25 @@ class KendaraanTransactionController extends Controller
       ], $exception->getCode());
     }
   }
+  
+  public function getSalesReport(Request $request)
+  {
+    try {
+      // Get the sales report from the KendaraanTransactionService
+      $report = $this->kendaraanTransactionService->generateSalesReport();
+      
+      return response()->json([
+        'status' => 'success',
+        'data' => $report,
+      ]);
+    } catch (\Exception $exception) {
+      return response()->json([
+        'status' => 'failed',
+        'message' => $exception->getMessage(),
+      ], $exception->getCode());
+    }
+  }
+  
 }
 
 

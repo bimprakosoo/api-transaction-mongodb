@@ -13,6 +13,6 @@ class KendaraanTransaction extends Eloquent
   
   public function kendaraan()
   {
-    return $this->belongsTo(Kendaraan::class);
+    return $this->belongsTo(Kendaraan::class, 'kendaraan_id');
   }
 }

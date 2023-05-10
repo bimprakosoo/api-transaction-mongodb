@@ -24,3 +24,5 @@ Route::post('/kendaraan/check-stock', [KendaraanController::class, 'checkStock']
 
 Route::post('/kendaraan-transactions', [KendaraanTransactionController::class, 'store']);
 
+Route::get('/sales-report', [KendaraanTransactionController::class, 'getSalesReport']);
+
