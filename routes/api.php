@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\KendaraanTransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/kendaraan/check-stock', [KendaraanController::class, 'checkStock']);
+Route::post('/kendaraan/check-stock', [KendaraanController::class, 'checkStock']);;
 
+Route::post('/kendaraan-transactions', [KendaraanTransactionController::class, 'store']);
 
-Route::get('/hello', function () {
-  return 'Hello, World!';
-});
