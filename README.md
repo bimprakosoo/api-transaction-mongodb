@@ -1,61 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1>Laravel 8 with MongoDB </h1>
+<h2>Prerequisites</h2>
+<p>Before getting started, make sure you have the following requirements installed on your system:</p>
+<ol>
+<li>PHP 8</li>
+<li>Laravel 8</li>
+<li>MongoDB 4.2</li>
+</ol>
+<h2>Installation</h2>
+<p>Follow these steps to get the project up and running on your local machine:</p>
+<ol>
+<ol>
+<li>Clone the repository to your local machine:</li>
+</ol>
+</ol>
+<pre><code>git clone https://github.com/bimprakosoo/test-inosoft.git</code></pre>
+<ol>
+<ol>
+<li>Navigate to the project directory:</li>
+</ol>
+</ol>
+<pre><code>cd your-repository</code></pre>
+<ol>
+<ol>
+<li>Install the project dependencies using Composer:</li>
+</ol>
+</ol>
+<pre><code>composer install</code></pre>
+<ol>
+<ol>
+<li>Install MongoDB on your system. Refer to the official MongoDB documentation for installation instructions specific to your operating system: <a href="https://docs.mongodb.com/manual/installation/">MongoDB Installation</a></li>
+<li>Set up your database configuration by creating a <code>.env</code> file. You can use the <code>.env.example</code> file as a template:</li>
+</ol>
+</ol>
+<pre><code>cp .env.example .env</code></pre>
+<p>Update the following lines in the <code>.env</code> file with your MongoDB connection details:</p>
+<pre><code>DB_CONNECTION=mongodb
+DB_HOST=127.0.0.1
+DB_PORT=27017
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password</code></pre>
+<ol>
+<ol>
+<li>Generate an application key:</li>
+</ol>
+</ol>
+<pre><code>php artisan key:generate</code></pre>
+<ol>
+<ol>
+<li>
+<ol>
+<li>Install the <code>tymon/jwt-auth</code></li>
+</ol>
+package for JSON Web Token authentication:</li>
+</ol>
+</ol>
+<pre><code>composer require tymon/jwt-auth</code></pre>
+<ol>
+<ol>
+<li>Generate the JWT secret key:</li>
+</ol>
+</ol>
+<pre><code>php artisan jwt:secret</code></pre>
+<ol>
+<ol>
+<li>Run the database migrations to create the necessary tables:</li>
+</ol>
+</ol>
+<pre><code>php artisan migrate</code></pre>
+<ol>
+<ol>
+<li>(Optional) Run the database seeder to populate the database with dummy data:</li>
+</ol>
+</ol>
+<pre><code>php artisan db:seed</code></pre>
+<ol>
+<ol>
+<li>Run the unit tests to ensure everything is set up correctly:</li>
+</ol>
+</ol>
+<pre><code>php artisan test</code></pre>
+<ol>
+<ol>
+<li>Start the development server:</li>
+</ol>
+</ol>
+<pre><code>php artisan serve</code></pre>
+<p>The application will be available at <a href="http://localhost:8000">http://127.0.0.1:8000</a>.</p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+<h2>Usage</h2>
 
-## About Laravel
+<p>Provide instructions and examples for users to understand and use your project. Include examples of API endpoints, how to make requests, and expected responses.</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h2>Register and Login</h2>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p>Before testing the API endpoints, you need to register and login to obtain an access token. Follow these steps:</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<ol>
+  <li>Register a new user:</li>
+  <p>Send a <code>POST</code> request to <code>http://127.0.0.1:8000/api/register</code> with the following parameters:</p>
+  <pre><code>{
+  "name": "Your Name",
+  "email": "your-email@example.com",
+  "password": "your-password"
+}</code></pre>
 
-## Learning Laravel
+  <li>Login with the registered user:</li>
+  <p>Send a <code>POST</code> request to   <code>http://127.0.0.1:8000/api/login</code> with the following parameters:</p>
+  <pre><code>{
+  "email": "your-email@example.com",
+  "password": "your-password"
+}</code></pre>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  <p>The response will include an access token that you can use to authenticate subsequent requests.</p>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<h2>Testing the API</h2>
 
-## Laravel Sponsors
+<p>Once you have obtained the access token, you can test the API endpoints using a tool like Postman. Set the "Authorization" header in your requests with the access token in the following format:</p>
+<pre><code>Authorization: Bearer &lt;access_token&gt;</code></pre>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+<p>Here are some example API endpoints you can test:</p>
 
-### Premium Partners
+<ul>
+  <li><strong>Check Stock:</strong> Send a <code>POST</code> request to <code>http://127.0.0.1:8000/api/kendaraan/check-stock</code> to check the stock of a vehicle.</li>
+  <li><strong>Create Kendaraan Transaction:</strong> Send a <code>POST</code> request to <code>http://127.0.0.1:8000/api/kendaraan-transactions</code> to create a new Kendaraan Transaction.</li>
+  <li><strong>Get Sales Report:</strong> Send a <code>GET</code> request to <code>http://127.0.0.1:8000/api/sales-report</code> to retrieve the sales report.</li>
+</ul>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p>Make sure to include the required parameters and provide the necessary authentication headers for each request.</p>
